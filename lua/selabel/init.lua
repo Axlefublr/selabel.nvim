@@ -118,10 +118,6 @@ end
 ---Refer to `:h vim.ui.select()`
 function m.select(items, opts, on_choice)
 	if #items == 0 then return end
-	if not on_choice then
-		vim.notify('no on_choice')
-		return
-	end
 	local opts = opts or {}
 	local labels = plugin_opts.labels
 	if #items > #labels then
@@ -169,11 +165,11 @@ function m.select(items, opts, on_choice)
 		until tbl_contains(valid_labels, picked) or not picked
 		vim.api.nvim_win_close(window, false)
 		if not picked then
-			on_choice(nil, nil)
+			if on_choice then on_choice(nil, nil) end
 			return
 		end
 		local index = tbl_index(valid_labels, picked)
-		on_choice(items[index], index)
+		if on_choice then on_choice(items[index], index) end
 	end, plugin_opts.hack)
 end
 
