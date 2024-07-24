@@ -54,7 +54,7 @@ If you want to change some plugin options (next section), put them here!
 ---An array of characters, each of which is responsible for picking that number of an option.
 ---For example if you provide `{ 'a', 'b', 'c' }`, you'll need to press `a` to pick the first option, `b` to pick the second, and `c` for third.
 ---This plugin will error out if it doesn't have enough labels to display all options given to it, so my recommendation is 15+ characters.
----(default `{ 'f', 'd', 's', 'r', 'e', 'w', 'v', 'c', 'x', 'a', 'j', 'k', 'l', 'u', 'i', 'o', 'm', ',', '.', ';' }` )
+---(default `{ 'f', 'd', 's', 'a', 'r', 'e', 'w', 'q', 'v', 'c', 'x', 'z', 'j', 'k', 'l', ';', 'u', 'i', 'o', 'p', 'm', ',', '.', '/' }` )
 ---@field labels string[]
 ---@field label_highlight string Highlight group to color the label letters with. (default Orange)
 ---@field separator string Separator between the label letter and the item text (default ': ')
@@ -86,7 +86,7 @@ If you want to change some plugin options (next section), put them here!
 ---Don't waste the precious computer's efforts 🥺!
 ---@type PluginOpts
 local plugin_opts = {
-    labels = { 'f', 'd', 's', 'r', 'e', 'w', 'v', 'c', 'x', 'a', 'j', 'k', 'l', 'u', 'i', 'o', 'm', ',', '.', ';' },
+    labels = { 'f', 'd', 's', 'a', 'r', 'e', 'w', 'q', 'v', 'c', 'x', 'z', 'j', 'k', 'l', ';', 'u', 'i', 'o', 'p', 'm', ',', '.', '/' },
     label_highlight = 'Orange',
     separator = ': ',
     separator_highlight = 'Bold',
