@@ -177,6 +177,29 @@ function m.select(items, opts, on_choice)
 	end, plugin_opts.hack)
 end
 
+---Array-like table of array-like tables, each one of those is two elements long.
+---The first element is the "item" that is going to be displayed as the option,
+---the second element is the function to execute, when that option is displayed.
+---```lua
+---require('selabel').select_nice({
+---    { 'option one', function(item, index) vim.notify(index) end },
+---    { 'another option of mine', function(item, _) vim.notify(item) end }
+---}, { prompt = ' My promptie ' })
+---```
+---@param alternatives table[]
+---@param opts table Passed to `vim.ui.select` (the second argument).
+function m.select_nice(alternatives, opts)
+	local items = {}
+	for index, choice in ipairs(alternatives) do
+		local item = choice[1]
+		table.insert(items, item)
+	end
+	local function on_choice(item, index)
+		alternatives[index][2](item, index)
+	end
+	m.select(items, opts, on_choice)
+end
+
 function m.setup(opts)
 	plugin_opts = vim.tbl_deep_extend('force', plugin_opts, opts or {})
 	if plugin_opts.inject then vim.ui.select = m.select end
