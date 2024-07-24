@@ -195,6 +195,7 @@ function m.select_nice(alternatives, opts)
 		table.insert(items, item)
 	end
 	local function on_choice(item, index)
+		if not item then return end
 		alternatives[index][2](item, index)
 	end
 	m.select(items, opts, on_choice)
