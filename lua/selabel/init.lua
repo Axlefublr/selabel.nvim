@@ -4,7 +4,7 @@ local m = {}
 ---An array of characters, each of which is responsible for picking that number of an option.
 ---For example if you provide `{ 'a', 'b', 'c' }`, you'll need to press `a` to pick the first option, `b` to pick the second, and `c` for third.
 ---This plugin will error out if it doesn't have enough labels to display all options given to it, so my recommendation is 15+ characters.
----(default `{ 'f', 'd', 's', 'a', 'r', 'e', 'w', 'q', 'v', 'c', 'x', 'z', 'j', 'k', 'l', ';', 'u', 'i', 'o', 'p', 'm', ',', '.', '/' }` )
+---(default `{ 'f', 'd', 's', 'a', 'j', 'k', 'l', ';', 'r', 'e', 'w', 'q', 'u', 'i', 'o', 'p', 'v', 'c', 'x', 'z', 'm', ',', '.', '/' }` )
 ---@field labels string[]
 ---@field label_highlight string Highlight group to color the label letters with. (default Orange)
 ---@field separator string Separator between the label letter and the item text (default ': ')
@@ -39,7 +39,7 @@ local m = {}
 ---@type PluginOpts
 local plugin_opts = {
 	-- stylua: ignore
-	labels = { 'f', 'd', 's', 'a', 'r', 'e', 'w', 'q', 'v', 'c', 'x', 'z', 'j', 'k', 'l', ';', 'u', 'i', 'o', 'p', 'm', ',', '.', '/' },
+	labels = { 'f', 'd', 's', 'a', 'j', 'k', 'l', ';', 'r', 'e', 'w', 'q', 'u', 'i', 'o', 'p', 'v', 'c', 'x', 'z', 'm', ',', '.', '/' },
 	label_highlight = 'Orange',
 	separator = ': ',
 	separator_highlight = 'Bold',
