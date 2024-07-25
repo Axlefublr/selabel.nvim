@@ -80,6 +80,17 @@ If you want to change some plugin options (next section), put them here!
 ---  col = 1,
 ---}
 ---@field win_opts table|function
+---A function to execute after the floating window presenting the options, gets created (but before `hack`).
+---The function is passed three arguments, that you may use: the window id, the buffer id, and the namespace id.
+---This plugin option is for a default "after action", but you can actually pass this same option to the `opts` of `vim.ui.select`, to override this default.
+---Keep in mind that the floating window and buffer do *not* become the current window + buffer, so if you want to target them, you'll have to use the arguments provided into the function.
+---This was initially made to allow you to add custom syntax highlighting to the presented options.
+---after = function(window, buffer, namespace)
+---    vim.api.nvim_buf_add_highlight(buffer, namespace, 'PurpleBold', 0, 3, -1)
+---end
+---I use this in my personal config to color the first option specially, for two of my custom pickers.
+---(default: nothing)
+---@field after function?
 
 ---If you like one of these defaults, *don't* specify it.
 ---If you like all of these defaults, leave `opts = {}`.
@@ -101,5 +112,6 @@ local plugin_opts = {
         row = 1,
         col = 1,
     },
+    after = nil
 }
 ```
