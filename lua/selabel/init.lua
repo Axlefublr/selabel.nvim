@@ -18,7 +18,7 @@ local m = {}
 ---@field hack integer
 ---Either a table to provide to the `opts` of `:h nvim_open_win()`, or a function that returns that table.
 ---If height is not specified, it's calculated automatically from the amount of items.
----If width is not specified, it's calculated automatically from the longest item + label width.
+---If width is not specified, it's calculated automatically from the longest item + label width (or the width of the prompt, if it's specified and enabled and is bigger than the longest item).
 ---The function is automatically passed the count of items as the first argument, and the longest item's length + label length as the second.
 ---The `title` option is automatically set to the `prompt` provided to `vim.ui.select`, unless you set this plugin's `enable_prompt` option to false.
 ---```lua
@@ -108,9 +108,17 @@ end
 ---@return table
 local function build_win_opts(items_len, longest_len, prompt)
 	local win_opts = eval_user_win_opts(plugin_opts.win_opts, items_len, longest_len)
-	if not win_opts.width then win_opts.width = longest_len end
 	if not win_opts.height then win_opts.height = items_len end
-	if plugin_opts.enable_prompt and prompt then win_opts.title = prompt end
+	if plugin_opts.enable_prompt and prompt then
+		win_opts.title = prompt
+		if not win_opts.width then
+			win_opts.width = math.max(longest_len, #prompt)
+		end
+	else
+		if not win_opts.width then
+			win_opts.width = longest_len
+		end
+	end
 	if win_opts.title_pos and not win_opts.title then win_opts.title_pos = nil end
 	return win_opts
 end

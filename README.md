@@ -68,7 +68,7 @@ If you want to change some plugin options (next section), put them here!
 ---@field hack integer
 ---Either a table to provide to the `opts` of `:h nvim_open_win()`, or a function that returns that table.
 ---If height is not specified, it's calculated automatically from the amount of items.
----If width is not specified, it's calculated automatically from the longest item + label width.
+---If width is not specified, it's calculated automatically from the longest item + label width (or the width of the prompt, if it's specified and enabled and is bigger than the longest item).
 ---The function is automatically passed the count of items as the first argument, and the longest item's length + label length as the second.
 ---The `title` option is automatically set to the `prompt` provided to `vim.ui.select`, unless you set this plugin's `enable_prompt` option to false.
 ---default = {
