@@ -33,6 +33,22 @@ and other places that use `vim.ui.select`
 
 are really pretty! And faster to use :3
 
+## More visual examples
+
+I made git stashes / branches UIs using this plugin.
+
+They are not included in the plugin — this is just an example of what you can do with `vim.ui.select`:
+
+![git branch](./img/branches.png)
+
+[video of me using them](https://asciinema.org/a/qBCLORIkwsU2javWW5xj71SlA)
+
+[`text-case.nvim`](https://github.com/johmsalas/text-case.nvim) has a weird design decision: instead of just using `vim.ui.select` and then letting the user change the interface using something like `dressing.nvim`, they _explicitly_ implement telescope support.
+
+So I implemented it myself (once again, not included in the plugin, just a showcase):
+
+![textcase picker](./img/textcase.png)
+
 ## Installation
 
 With lazy.nvim:
