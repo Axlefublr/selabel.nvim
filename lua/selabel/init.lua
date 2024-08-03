@@ -1,6 +1,6 @@
 local m = {}
 
----@class PluginOpts
+---@class SelabelPluginOpts
 ---An array of characters, each of which is responsible for picking that number of an option.
 ---For example if you provide `{ 'a', 'b', 'c' }`, you'll need to press `a` to pick the first option, `b` to pick the second, and `c` for third.
 ---This plugin will error out if it doesn't have enough labels to display all options given to it, so my recommendation is 15+ characters.
@@ -49,7 +49,7 @@ local m = {}
 ---If you like one of these defaults, *don't* specify it.
 ---If you like all of these defaults, leave `opts = {}`.
 ---Don't waste the precious computer's efforts 🥺!
----@type PluginOpts
+---@type SelabelPluginOpts
 local plugin_opts = {
 	-- stylua: ignore
 	labels = { 'f', 'd', 's', 'a', 'j', 'k', 'l', ';', 'r', 'e', 'w', 'q', 'u', 'i', 'o', 'p', 'v', 'c', 'x', 'z', 'm', ',', '.', '/' },
@@ -224,6 +224,7 @@ function m.select_nice(alternatives, opts)
 	m.select(items, opts, on_choice)
 end
 
+---@param opts SelabelPluginOpts
 function m.setup(opts)
 	plugin_opts = vim.tbl_deep_extend('force', plugin_opts, opts or {})
 	if plugin_opts.inject then vim.ui.select = m.select end

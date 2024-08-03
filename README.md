@@ -66,7 +66,7 @@ If you want to change some plugin options (next section), put them here!
 ## Configuraton
 
 ```lua
----@class PluginOpts
+---@class SelabelPluginOpts
 ---An array of characters, each of which is responsible for picking that number of an option.
 ---For example if you provide `{ 'a', 'b', 'c' }`, you'll need to press `a` to pick the first option, `b` to pick the second, and `c` for third.
 ---This plugin will error out if it doesn't have enough labels to display all options given to it, so my recommendation is 15+ characters.
@@ -111,7 +111,7 @@ If you want to change some plugin options (next section), put them here!
 ---If you like one of these defaults, *don't* specify it.
 ---If you like all of these defaults, leave `opts = {}`.
 ---Don't waste the precious computer's efforts 🥺!
----@type PluginOpts
+---@type SelabelPluginOpts
 local plugin_opts = {
     labels = { 'f', 'd', 's', 'a', 'j', 'k', 'l', ';', 'r', 'e', 'w', 'q', 'u', 'i', 'o', 'p', 'v', 'c', 'x', 'z', 'm', ',', '.', '/' },
     label_highlight = 'Orange',
