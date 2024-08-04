@@ -5,17 +5,17 @@ local m = {}
 ---For example if you provide `{ 'a', 'b', 'c' }`, you'll need to press `a` to pick the first option, `b` to pick the second, and `c` for third.
 ---This plugin will error out if it doesn't have enough labels to display all options given to it, so my recommendation is 15+ characters.
 ---(default `{ 'f', 'd', 's', 'a', 'j', 'k', 'l', ';', 'r', 'e', 'w', 'q', 'u', 'i', 'o', 'p', 'v', 'c', 'x', 'z', 'm', ',', '.', '/' }` )
----@field labels string[]
----@field label_highlight string Highlight group to color the label letters with. (default Orange)
----@field separator string Separator between the label letter and the item text (default ': ')
----@field separator_highlight string Highlight group to color the separator with (default Bold)
----@field inject boolean Replace `vim.ui.select`. (default true)
+---@field labels string[]|nil
+---@field label_highlight string? Highlight group to color the label letters with. (default Orange)
+---@field separator string? Separator between the label letter and the item text (default ': ')
+---@field separator_highlight string? Highlight group to color the separator with (default Bold)
+---@field inject boolean? Replace `vim.ui.select`. (default true)
 ---Use the `prompt` provided to `opts` of `vim.ui.select` as the title of the floating window. (default true)
----@field enable_prompt boolean
+---@field enable_prompt boolean?
 ---This plugin relies on a hack: it needs to sleep (default 1 ms) to make sure it will create the floating window before holding up the thread by asking the user for a key.
 ---If after executing `vim.ui.select` you can't press any keys except the labels, and yet the floating window is not there, increase this value.
 ---(This is not a direct sleep: it first sleeps, and then appends the key asking onto the nvim event loop. So it's not like you need to guess the perfect amount of sleep here, which is why it can be just 1)
----@field hack integer
+---@field hack integer?
 ---Either a table to provide to the `opts` of `:h nvim_open_win()`, or a function that returns that table.
 ---If height is not specified, it's calculated automatically from the amount of items.
 ---If width is not specified, it's calculated automatically from the longest item + label width (or the width of the prompt, if it's specified and enabled and is bigger than the longest item).
@@ -31,7 +31,7 @@ local m = {}
 ---  col = 1,
 ---}
 ---```
----@field win_opts table|function
+---@field win_opts table|function|nil
 ---A function to execute after the floating window presenting the options, gets created (but before `hack`).
 ---The function is passed three arguments, that you may use: the window id, the buffer id, and the namespace id.
 ---This plugin option is for a default "after action", but you can actually pass this same option to the `opts` of `vim.ui.select`, to override this default.
@@ -224,7 +224,7 @@ function m.select_nice(alternatives, opts)
 	m.select(items, opts, on_choice)
 end
 
----@param opts SelabelPluginOpts
+---@param opts SelabelPluginOpts?
 function m.setup(opts)
 	plugin_opts = vim.tbl_deep_extend('force', plugin_opts, opts or {})
 	if plugin_opts.inject then vim.ui.select = m.select end
