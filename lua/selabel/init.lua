@@ -1,5 +1,7 @@
 local m = {}
 
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ default plugin options ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 ---@class SelabelPluginOpts
 ---An array of characters, each of which is responsible for picking that number of an option.
 ---For example if you provide `{ 'a', 'b', 'c' }`, you'll need to press `a` to pick the first option, `b` to pick the second, and `c` for third.
@@ -70,6 +72,8 @@ local plugin_opts = {
 	after = nil
 }
 
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ helper functions ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 local function tbl_contains(table, item)
 	for _, thingy in pairs(table) do
 		if thingy == item then return true end
@@ -93,7 +97,7 @@ end
 
 ---Return the next character the user presses.
 ---@return string|nil character `nil` if the user pressed <Esc>.
-local function char(prompt)
+local function char()
 	---@type string|nil
 	local char = vim.fn.getcharstr()
 	-- In '' is the escape character (<Esc>).
@@ -101,6 +105,8 @@ local function char(prompt)
 	if char == '' then char = nil end
 	return char
 end
+
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ window manipulation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 local LABEL_WIDTH = 1
 
@@ -137,11 +143,13 @@ local function build_win_opts(items_len, longest_len, prompt)
 	return win_opts
 end
 
+-- ═══════════════════════════════════════ main functionality ═══════════════════════════════════════
+
 ---Refer to `:h vim.ui.select()`
 function m.select(items, opts, on_choice)
 	if #items == 0 then return end
 	local opts = opts or {}
-	local labels = plugin_opts.labels
+	local labels = plugin_opts.labels --[=[@as string[]]=]
 	if #items > #labels then
 		vim.notify('too many options (' .. #items .. ')')
 		return
@@ -155,7 +163,10 @@ function m.select(items, opts, on_choice)
 	local longest_len = 0
 	for index, item in ipairs(items) do
 		local stringified = stringify(item)
-		if #stringified > longest_len then longest_len = #stringified end
+		local _, length = vim.str_utfindex(stringified)
+		if length > longest_len then
+			longest_len = length
+		end
 		table.insert(lines, labels[index] .. plugin_opts.separator .. stringified)
 	end
 	longest_len = longest_len + padding
@@ -213,7 +224,7 @@ end
 ---@param opts table Passed to `vim.ui.select` (the second argument).
 function m.select_nice(alternatives, opts)
 	local items = {}
-	for index, choice in ipairs(alternatives) do
+	for _, choice in ipairs(alternatives) do
 		local item = choice[1]
 		table.insert(items, item)
 	end
@@ -223,6 +234,8 @@ function m.select_nice(alternatives, opts)
 	end
 	m.select(items, opts, on_choice)
 end
+
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ plugin setup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ---@param opts SelabelPluginOpts?
 function m.setup(opts)
